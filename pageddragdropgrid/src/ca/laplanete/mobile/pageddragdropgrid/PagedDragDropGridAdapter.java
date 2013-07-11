@@ -124,4 +124,8 @@ public interface PagedDragDropGridAdapter {
 	 * @return TOP or BOTTOM. 
 	 */
     public int deleteDropZoneLocation();
+
+	public void dragStarted();
+
+	public void dragFinished();
 }

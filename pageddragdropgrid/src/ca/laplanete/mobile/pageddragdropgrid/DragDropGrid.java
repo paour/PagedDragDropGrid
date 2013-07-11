@@ -194,7 +194,15 @@ public class DragDropGrid extends ViewGroup implements OnTouchListener, OnLongCl
             public int deleteDropZoneLocation() {
                 return PagedDragDropGridAdapter.BOTTOM;
             }
-        };       
+
+			@Override
+			public void dragStarted() {
+			}
+
+			@Override
+			public void dragFinished() {
+			}
+		};
     }
 
     public void setAdapter(PagedDragDropGridAdapter adapter) {
@@ -274,7 +282,8 @@ public class DragDropGrid extends ViewGroup implements OnTouchListener, OnLongCl
     		dragged = -1;
     		lastTarget = -1;
     		container.enableScroll();
-    		
+
+			adapter.dragFinished();
 	    }
 	}
 
@@ -977,6 +986,8 @@ public class DragDropGrid extends ViewGroup implements OnTouchListener, OnLongCl
     		animateDragged();
     		popDeleteView();
 
+			adapter.dragStarted();
+
     		return true;
 	    }
 	    
@@ -1024,7 +1035,6 @@ public class DragDropGrid extends ViewGroup implements OnTouchListener, OnLongCl
 		int b = computeDropZoneVerticalBottom();
 		
 		deleteZone.layout(l,  t, l + gridPageWidth, b);
-		
 	}
 	
 	private int computeDropZoneVerticalBottom() {
