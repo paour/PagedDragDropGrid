@@ -854,7 +854,11 @@ public class DragDropGrid extends ViewGroup implements OnTouchListener, OnLongCl
 				}
 
 				// divide and round up http://stackoverflow.com/a/7446742/304876
-				computedRowCount = (biggestCount + computedColumnCount - 1) / computedColumnCount;
+				if (computedColumnCount != 0) {
+					computedRowCount = (biggestCount + computedColumnCount - 1) / computedColumnCount;
+				} else {
+					computedRowCount = 0;
+				}
 			}
 		}
 
