@@ -7,12 +7,14 @@ Supports Android 2.2 (API 8) and up
 
 Tested on a Nexus One, Galaxy Nexus and a Nexus 7
 
-Example video: http://youtu.be/FYTSRfthSuQ
+Example video: 
+
+v0.1 : http://youtu.be/FYTSRfthSuQ
+
+v0.2 : http://youtu.be/0HI2meKKLYk
 
 
-Note: The Master branch is in active development.
-
-
+Note: The Master branch is in active development.  Use tags for a more stable version.
 
 
 Usage
@@ -114,7 +116,12 @@ public interface PagedDragDropGridAdapter {
 	 * 
 	 * @return TOP or BOTTOM. 
 	 */
-    public int deleteDropZoneLocation();
+	public int deleteDropZoneLocation();
+
+	/**
+	 * Tells the grid to show or not the remove drop zone when moving an item
+ 	 */
+	public boolean showRemoveDropZone();
 }
 ```
 	
@@ -138,6 +145,15 @@ gridview.setAdapter(new ExamplePagedDragDropGridAdapter(this));
 
 /* Optionally set an onClickListener */
 gridview.setClickListener(this);
+
+/* Optionally set an setOnPageChangedListener */
+gridview.setOnPageChangedListener(new OnPageChangedListener() {            
+	@Override
+	public void onPageChanged(PagedDragDropGrid sender, int newPageNumber) {
+	        Toast.makeText(ExampleActivity.this, "Page changed to page " + newPageNumber, Toast.LENGTH_SHORT).show();                
+	    }
+	});
+
 ```
 
 Inspired by

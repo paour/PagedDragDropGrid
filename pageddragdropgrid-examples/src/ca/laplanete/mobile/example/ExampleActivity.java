@@ -37,9 +37,12 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
+import ca.laplanete.mobile.pageddragdropgrid.OnPageChangedListener;
 import ca.laplanete.mobile.pageddragdropgrid.PagedDragDropGrid;
 
 public class ExampleActivity extends Activity implements OnClickListener {
+    
+    private String CURRENT_PAGE_KEY = "CURRENT_PAGE_KEY";
     
     private PagedDragDropGrid gridview;
 
@@ -48,11 +51,37 @@ public class ExampleActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.example);
-		gridview = (PagedDragDropGrid) findViewById(R.id.gridview);		
-		gridview.setAdapter(new ExamplePagedDragDropGridAdapter(this, gridview));
-		gridview.setClickListener(this);
+		gridview = (PagedDragDropGrid) findViewById(R.id.gridview);	
 		
-		gridview.setBackgroundColor(Color.LTGRAY);
+		ExamplePagedDragDropGridAdapter adapter = new ExamplePagedDragDropGridAdapter(this, gridview);
+		
+        gridview.setAdapter(adapter);
+		gridview.setClickListener(this);
+
+		gridview.setBackgroundColor(Color.LTGRAY);	
+		
+		
+		gridview.setOnPageChangedListener(new OnPageChangedListener() {            
+            @Override
+            public void onPageChanged(PagedDragDropGrid sender, int newPageNumber) {
+                Toast.makeText(ExampleActivity.this, "Page changed to page " + newPageNumber, Toast.LENGTH_SHORT).show();                
+            }
+        });
+	}	
+	
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+	  super.onRestoreInstanceState(savedInstanceState);
+      int savedPage = savedInstanceState.getInt(CURRENT_PAGE_KEY);
+      gridview.restoreCurrentPage(savedPage);
+	}
+	
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+	    outState.putInt(CURRENT_PAGE_KEY, gridview.currentPage());
+	    super.onSaveInstanceState(outState);
 	}
 	
     @Override

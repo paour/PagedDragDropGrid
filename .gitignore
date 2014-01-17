@@ -23,3 +23,5 @@ target
 # Idea project files
 *.iml
 .idea
+
+**/build/
